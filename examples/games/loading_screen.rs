@@ -14,6 +14,9 @@ use pipelines_ready::*;
 // will show a loading screen. Once loading is complete, we
 // will transition to the scene we just loaded.
 
+const FOX_PATH: &str = "models/animated/Fox.glb";
+const HELMENT_PATH: &str = "models/FlightHelmet/FlightHelmet.gltf";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -150,7 +153,7 @@ fn load_level_1(
     ));
 
     // Save the asset into the `loading_assets` vector.
-    let fox = asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/animated/Fox.glb"));
+    let fox = asset_server.load(GltfAssetLabel::Scene(0).from_asset(FOX_PATH));
     loading_data.loading_assets.push(fox.clone().into());
     // Spawn the fox.
     commands.spawn((
@@ -192,8 +195,7 @@ fn load_level_2(
     ));
 
     // Spawn the helmet.
-    let helmet_scene = asset_server
-        .load(GltfAssetLabel::Scene(0).from_asset("models/FlightHelmet/FlightHelmet.gltf"));
+    let helmet_scene = asset_server.load(GltfAssetLabel::Scene(0).from_asset(HELMENT_PATH));
     loading_data
         .loading_assets
         .push(helmet_scene.clone().into());

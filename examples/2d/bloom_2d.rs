@@ -9,6 +9,8 @@ use bevy::{
     sprite::MaterialMesh2dBundle,
 };
 
+const LOGO_PATH: &str = "branding/bevy_bird_dark.png";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -37,7 +39,7 @@ fn setup(
 
     // Sprite
     commands.spawn(SpriteBundle {
-        texture: asset_server.load("branding/bevy_bird_dark.png"),
+        texture: asset_server.load(LOGO_PATH),
         sprite: Sprite {
             color: Color::srgb(5.0, 5.0, 5.0), // 4. Put something bright in a dark environment to see the effect
             custom_size: Some(Vec2::splat(160.0)),

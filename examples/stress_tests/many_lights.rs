@@ -15,6 +15,8 @@ use bevy::{
 };
 use rand::{thread_rng, Rng};
 
+const WARNING_FILE_PATH: &str = "warning_string.txt";
+
 fn main() {
     App::new()
         .add_plugins((
@@ -46,7 +48,7 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    warn!(include_str!("warning_string.txt"));
+    warn!(include_str!(WARNING_FILE_PATH));
 
     const LIGHT_RADIUS: f32 = 0.3;
     const LIGHT_INTENSITY: f32 = 1000.0;

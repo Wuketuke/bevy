@@ -2,6 +2,8 @@
 
 use bevy::prelude::*;
 
+const LOGO_PATH: &str = "branding/bevy_bird_dark.png";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -12,7 +14,7 @@ fn main() {
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2dBundle::default());
     commands.spawn(SpriteBundle {
-        texture: asset_server.load("branding/bevy_bird_dark.png"),
+        texture: asset_server.load(LOGO_PATH),
         ..default()
     });
 }

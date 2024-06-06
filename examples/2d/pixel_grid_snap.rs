@@ -13,6 +13,9 @@ use bevy::{
     window::WindowResized,
 };
 
+const LOGO_DARK_PATH: &str = "pixel/bevy_pixel_dark.png";
+const LOGO_LIGHT_PATH: &str = "pixel/bevy_pixel_light.png";
+
 /// In-game resolution width.
 const RES_WIDTH: u32 = 160;
 
@@ -55,7 +58,7 @@ fn setup_sprite(mut commands: Commands, asset_server: Res<AssetServer>) {
     // the sample sprite that will be rendered to the pixel-perfect canvas
     commands.spawn((
         SpriteBundle {
-            texture: asset_server.load("pixel/bevy_pixel_dark.png"),
+            texture: asset_server.load(LOGO_DARK_PATH),
             transform: Transform::from_xyz(-40., 20., 2.),
             ..default()
         },
@@ -66,7 +69,7 @@ fn setup_sprite(mut commands: Commands, asset_server: Res<AssetServer>) {
     // the sample sprite that will be rendered to the high-res "outer world"
     commands.spawn((
         SpriteBundle {
-            texture: asset_server.load("pixel/bevy_pixel_light.png"),
+            texture: asset_server.load(LOGO_LIGHT_PATH),
             transform: Transform::from_xyz(-40., -20., 2.),
             ..default()
         },

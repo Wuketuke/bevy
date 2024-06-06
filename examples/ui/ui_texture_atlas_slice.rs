@@ -7,6 +7,9 @@ use bevy::{
     winit::WinitSettings,
 };
 
+const BORDER_PATH: &str = "textures/fantasy_ui_borders/border_sheet.png";
+const FONT_PATH: &str = "fonts/FiraSans-Bold.ttf";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -49,7 +52,7 @@ fn setup(
     asset_server: Res<AssetServer>,
     mut texture_atlases: ResMut<Assets<TextureAtlasLayout>>,
 ) {
-    let texture_handle = asset_server.load("textures/fantasy_ui_borders/border_sheet.png");
+    let texture_handle = asset_server.load(BORDER_PATH);
     let atlas_layout = TextureAtlasLayout::from_grid(UVec2::new(50, 50), 6, 6, None, None);
     let atlas_layout_handle = texture_atlases.add(atlas_layout);
 
@@ -104,7 +107,7 @@ fn setup(
                         parent.spawn(TextBundle::from_section(
                             "Button",
                             TextStyle {
-                                font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                                font: asset_server.load(FONT_PATH),
                                 font_size: 40.0,
                                 color: Color::srgb(0.9, 0.9, 0.9),
                             },

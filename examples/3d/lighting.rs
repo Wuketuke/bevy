@@ -10,6 +10,8 @@ use bevy::{
     render::camera::{Exposure, PhysicalCameraParameters},
 };
 
+const LOGO_PATH:&str="branding/bevy_logo_light.png";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -84,7 +86,7 @@ fn setup(
             mesh: meshes.add(Rectangle::new(2.0, 0.5)),
             transform,
             material: materials.add(StandardMaterial {
-                base_color_texture: Some(asset_server.load("branding/bevy_logo_light.png")),
+                base_color_texture: Some(asset_server.load(LOGO_PATH)),
                 perceptual_roughness: 1.0,
                 alpha_mode: AlphaMode::Mask(0.5),
                 cull_mode: None,

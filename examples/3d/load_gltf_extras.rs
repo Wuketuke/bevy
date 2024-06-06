@@ -5,6 +5,8 @@ use bevy::{
     prelude::*,
 };
 
+const SCENE_PATH: &str = "models/extras/gltf_extras.glb#Scene0";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -31,7 +33,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     });
     // a barebones scene containing one of each gltf_extra type
     commands.spawn(SceneBundle {
-        scene: asset_server.load("models/extras/gltf_extras.glb#Scene0"),
+        scene: asset_server.load(SCENE_PATH),
         ..default()
     });
 

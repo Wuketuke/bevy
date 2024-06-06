@@ -6,6 +6,10 @@ use bevy::{
 
 /// The initial position of the camera.
 const CAMERA_INITIAL_POSITION: Vec3 = vec3(-0.4, 0.0, 0.0);
+const MODEL_PATH: &str = "models/AnisotropyBarnLamp/AnisotropyBarnLamp.gltf#Scene0";
+const FONT_PATH: &str = "fonts/FiraMono-Medium.ttf";
+const SPECULAR_PATH: &str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+const DIFFUSE_PATH: &str = "environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2";
 
 /// The current settings of the app, as chosen by the user.
 #[derive(Resource)]
@@ -73,7 +77,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>, app_status: Res
     spawn_directional_light(&mut commands);
 
     commands.spawn(SceneBundle {
-        scene: asset_server.load("models/AnisotropyBarnLamp/AnisotropyBarnLamp.gltf#Scene0"),
+        scene: asset_server.load(MODEL_PATH),
         transform: Transform::from_xyz(0.0, 0.07, -0.13),
         ..default()
     });
@@ -243,11 +247,11 @@ fn add_skybox_and_environment_map(
         .entity(entity)
         .insert(Skybox {
             brightness: 5000.0,
-            image: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            image: asset_server.load(SPECULAR_PATH),
         })
         .insert(EnvironmentMapLight {
-            diffuse_map: asset_server.load("environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2"),
-            specular_map: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            diffuse_map: asset_server.load(DIFFUSE_PATH),
+            specular_map: asset_server.load(SPECULAR_PATH),
             intensity: 2500.0,
         });
 }
@@ -297,7 +301,7 @@ impl AppStatus {
         Text::from_section(
             format!("{}\n{}", material_variant_help_text, light_help_text),
             TextStyle {
-                font: asset_server.load("fonts/FiraMono-Medium.ttf"),
+                font: asset_server.load(FONT_PATH),
                 font_size: 24.0,
                 ..default()
             },

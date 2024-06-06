@@ -9,6 +9,7 @@ use bevy::{
     winit::{UpdateMode, WinitSettings},
 };
 
+const WARNING_FILE_PATH: &str = "warning_string.txt";
 const SYSTEM_COUNT: u32 = 10;
 
 fn main() {
@@ -80,7 +81,7 @@ fn system(config: Res<Config>, time: Res<Time>, mut draw: Gizmos) {
 }
 
 fn setup(mut commands: Commands) {
-    warn!(include_str!("warning_string.txt"));
+    warn!(include_str!(WARNING_FILE_PATH));
 
     commands.spawn(Camera3dBundle {
         transform: Transform::from_xyz(3., 1., 5.).looking_at(Vec3::ZERO, Vec3::Y),

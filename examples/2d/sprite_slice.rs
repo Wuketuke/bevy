@@ -2,6 +2,10 @@
 //! sprites in multiple resolutions while keeping it in proportion
 use bevy::prelude::*;
 
+const FONT_PATH: &str = "fonts/FiraSans-Bold.ttf";
+const SQUARE_1_PATH: &str = "textures/slice_square.png";
+const SQUARE_2_PATH: &str = "textures/slice_square_2.png";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
@@ -110,7 +114,7 @@ fn spawn_sprites(
 
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2dBundle::default());
-    let font = asset_server.load("fonts/FiraSans-Bold.ttf");
+    let font = asset_server.load(FONT_PATH);
     let style = TextStyle {
         font: font.clone(),
         font_size: 16.0,
@@ -118,8 +122,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     };
 
     // Load textures
-    let handle_1 = asset_server.load("textures/slice_square.png");
-    let handle_2 = asset_server.load("textures/slice_square_2.png");
+    let handle_1 = asset_server.load(SQUARE_1_PATH);
+    let handle_2 = asset_server.load(SQUARE_2_PATH);
 
     spawn_sprites(
         &mut commands,

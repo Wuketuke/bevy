@@ -5,6 +5,10 @@ use std::fmt;
 
 use bevy::{prelude::*, render::texture::ImageLoaderSettings};
 
+const PARALLAX_CUBE_PATH: &str = "textures/parallax_example/cube_normal.png";
+const CUBE_COLOR_PATH: &str = "textures/parallax_example/cube_color.png";
+const CUBE_DEPTH_PATH: &str = "textures/parallax_example/cube_depth.png";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -204,7 +208,7 @@ fn setup(
     // open the depth map, and do Filters → Generic → Normal Map
     // You should enable the "flip X" checkbox.
     let normal_handle = asset_server.load_with_settings(
-        "textures/parallax_example/cube_normal.png",
+        PARALLAX_CUBE_PATH,
         // The normal map texture is in linear color space. Lighting won't look correct
         // if `is_srgb` is `true`, which is the default.
         |settings: &mut ImageLoaderSettings| settings.is_srgb = false,
@@ -254,11 +258,11 @@ fn setup(
     let parallax_mapping_method = CurrentMethod::default();
     let parallax_material = materials.add(StandardMaterial {
         perceptual_roughness: 0.4,
-        base_color_texture: Some(asset_server.load("textures/parallax_example/cube_color.png")),
+        base_color_texture: Some(asset_server.load(CUBE_COLOR_PATH)),
         normal_map_texture: Some(normal_handle),
         // The depth map is a greyscale texture where black is the highest level and
         // white the lowest.
-        depth_map: Some(asset_server.load("textures/parallax_example/cube_depth.png")),
+        depth_map: Some(asset_server.load(CUBE_DEPTH_PATH)),
         parallax_depth_scale,
         parallax_mapping_method: parallax_mapping_method.0,
         max_parallax_layer_count,

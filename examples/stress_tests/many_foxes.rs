@@ -13,6 +13,9 @@ use bevy::{
     winit::{UpdateMode, WinitSettings},
 };
 
+const WARNING_FILE_PATH: &str = "warning_string.txt";
+const FOX_MODEL_PATH: &str = "models/animated/Fox.glb";
+
 #[derive(FromArgs, Resource)]
 /// `many_foxes` stress test
 struct Args {
@@ -114,13 +117,13 @@ fn setup(
     mut animation_graphs: ResMut<Assets<AnimationGraph>>,
     foxes: Res<Foxes>,
 ) {
-    warn!(include_str!("warning_string.txt"));
+    warn!(include_str!(WARNING_FILE_PATH));
 
     // Insert a resource with the current scene information
     let animation_clips = [
-        asset_server.load(GltfAssetLabel::Animation(2).from_asset("models/animated/Fox.glb")),
-        asset_server.load(GltfAssetLabel::Animation(1).from_asset("models/animated/Fox.glb")),
-        asset_server.load(GltfAssetLabel::Animation(0).from_asset("models/animated/Fox.glb")),
+        asset_server.load(GltfAssetLabel::Animation(2).from_asset(FOX_MODEL_PATH)),
+        asset_server.load(GltfAssetLabel::Animation(1).from_asset(FOX_MODEL_PATH)),
+        asset_server.load(GltfAssetLabel::Animation(0).from_asset(FOX_MODEL_PATH)),
     ];
     let mut animation_graph = AnimationGraph::new();
     let node_indices = animation_graph
@@ -136,8 +139,7 @@ fn setup(
     // The foxes in each ring are spaced at least 2m apart around its circumference.'
 
     // NOTE: This fox model faces +z
-    let fox_handle =
-        asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/animated/Fox.glb"));
+    let fox_handle = asset_server.load(GltfAssetLabel::Scene(0).from_asset(FOX_MODEL_PATH));
 
     let ring_directions = [
         (

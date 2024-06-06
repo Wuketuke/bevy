@@ -14,6 +14,8 @@ use bevy::{
     winit::{UpdateMode, WinitSettings},
 };
 
+const WARNING_FILE_PATH: &str = "warning_string.txt";
+
 fn main() {
     let mut app = App::new();
     app.add_plugins((
@@ -42,7 +44,7 @@ fn main() {
 }
 
 fn setup(mut commands: Commands) {
-    warn!(include_str!("warning_string.txt"));
+    warn!(include_str!(WARNING_FILE_PATH));
 
     commands.spawn(Camera2dBundle::default());
     let mut text = Text {

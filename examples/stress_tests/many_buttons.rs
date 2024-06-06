@@ -10,6 +10,8 @@ use bevy::{
 };
 
 const FONT_SIZE: f32 = 7.0;
+const LOGO_PATH: &str = "branding/icon.png";
+const WARNING_FILE_PATH: &str = "warning_string.txt";
 
 #[derive(FromArgs, Resource)]
 /// `many_buttons` general UI benchmark that stress tests layouting, text, interaction and rendering
@@ -111,9 +113,9 @@ fn button_system(
 }
 
 fn setup_flex(mut commands: Commands, asset_server: Res<AssetServer>, args: Res<Args>) {
-    warn!(include_str!("warning_string.txt"));
+    warn!(include_str!(WARNING_FILE_PATH));
     let image = if 0 < args.image_freq {
-        Some(asset_server.load("branding/icon.png"))
+        Some(asset_server.load(LOGO_PATH))
     } else {
         None
     };
@@ -168,9 +170,9 @@ fn setup_flex(mut commands: Commands, asset_server: Res<AssetServer>, args: Res<
 }
 
 fn setup_grid(mut commands: Commands, asset_server: Res<AssetServer>, args: Res<Args>) {
-    warn!(include_str!("warning_string.txt"));
+    warn!(include_str!(WARNING_FILE_PATH));
     let image = if 0 < args.image_freq {
-        Some(asset_server.load("branding/icon.png"))
+        Some(asset_server.load(LOGO_PATH))
     } else {
         None
     };

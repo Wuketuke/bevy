@@ -21,6 +21,10 @@ use bevy::{
     },
 };
 
+const MODEL_PATH: &str = "models/FlightHelmet/FlightHelmet.gltf";
+const DIFFUSE_PATH: &str = "environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2";
+const SPECULAR_PATH: &str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+
 fn main() {
     App::new()
         .insert_resource(Msaa::Off)
@@ -278,8 +282,7 @@ fn setup(
 
     // Flight Helmet
     commands.spawn(SceneBundle {
-        scene: asset_server
-            .load(GltfAssetLabel::Scene(0).from_asset("models/FlightHelmet/FlightHelmet.gltf")),
+        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(MODEL_PATH)),
         ..default()
     });
 
@@ -321,8 +324,8 @@ fn setup(
             ..default()
         },
         EnvironmentMapLight {
-            diffuse_map: asset_server.load("environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2"),
-            specular_map: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            diffuse_map: asset_server.load(DIFFUSE_PATH),
+            specular_map: asset_server.load(SPECULAR_PATH),
             intensity: 150.0,
         },
         FogSettings {

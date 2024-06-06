@@ -9,6 +9,8 @@ use bevy::{
     prelude::*,
 };
 
+const MODEL_PATH: &str = "models/animated/Fox.glb";
+
 fn main() {
     App::new()
         .insert_resource(AmbientLight {
@@ -41,9 +43,9 @@ fn setup(
     let animations = graph
         .add_clips(
             [
-                GltfAssetLabel::Animation(2).from_asset("models/animated/Fox.glb"),
-                GltfAssetLabel::Animation(1).from_asset("models/animated/Fox.glb"),
-                GltfAssetLabel::Animation(0).from_asset("models/animated/Fox.glb"),
+                GltfAssetLabel::Animation(2).from_asset(MODEL_PATH),
+                GltfAssetLabel::Animation(1).from_asset(MODEL_PATH),
+                GltfAssetLabel::Animation(0).from_asset(MODEL_PATH),
             ]
             .into_iter()
             .map(|path| asset_server.load(path)),
@@ -91,7 +93,7 @@ fn setup(
 
     // Fox
     commands.spawn(SceneBundle {
-        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/animated/Fox.glb")),
+        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(MODEL_PATH)),
         ..default()
     });
 

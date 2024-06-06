@@ -20,6 +20,9 @@ use bevy::{
     render::camera::PhysicalCameraParameters,
 };
 
+const SCENE_PATH: &str = "models/DepthOfFieldExample/DepthOfFieldExample.glb";
+const CIRCUIT_BOARD_PATH: &str = "models/DepthOfFieldExample/CircuitBoardLightmap.hdr";
+
 /// The increments in which the user can adjust the focal distance, in meters
 /// per frame.
 const FOCAL_DISTANCE_SPEED: f32 = 0.05;
@@ -88,10 +91,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>, app_settings: R
 
     // Spawn the scene.
     commands.spawn(SceneBundle {
-        scene: asset_server.load(
-            GltfAssetLabel::Scene(0)
-                .from_asset("models/DepthOfFieldExample/DepthOfFieldExample.glb"),
-        ),
+        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(SCENE_PATH)),
         ..default()
     });
 
@@ -207,7 +207,7 @@ fn tweak_scene(
         if &**name == "CircuitBoard" {
             materials.get_mut(material).unwrap().lightmap_exposure = 10000.0;
             commands.entity(entity).insert(Lightmap {
-                image: asset_server.load("models/DepthOfFieldExample/CircuitBoardLightmap.hdr"),
+                image: asset_server.load(CIRCUIT_BOARD_PATH),
                 ..default()
             });
         }

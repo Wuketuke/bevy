@@ -11,6 +11,8 @@ use bevy::{
     render::render_resource::{AsBindGroup, ShaderRef},
 };
 
+const SHADER_PATH: &str = "shaders/fallback_image_test.wgsl";
+
 fn main() {
     App::new()
         .add_plugins((
@@ -73,6 +75,6 @@ struct FallbackTestMaterial {
 
 impl Material for FallbackTestMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/fallback_image_test.wgsl".into()
+        SHADER_PATH.into()
     }
 }

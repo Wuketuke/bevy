@@ -20,6 +20,9 @@ use bevy::{
     prelude::*,
 };
 
+const MODEL_PATH: &str = "textures/basic_metering_mask.png";
+const SPECULAR_PATH: &str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -36,7 +39,7 @@ fn setup(
     mut compensation_curves: ResMut<Assets<AutoExposureCompensationCurve>>,
     asset_server: Res<AssetServer>,
 ) {
-    let metering_mask = asset_server.load("textures/basic_metering_mask.png");
+    let metering_mask = asset_server.load(MODEL_PATH);
 
     commands.spawn((
         Camera3dBundle {
@@ -52,7 +55,7 @@ fn setup(
             ..default()
         },
         Skybox {
-            image: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            image: asset_server.load(SPECULAR_PATH),
             brightness: bevy::pbr::light_consts::lux::DIRECT_SUNLIGHT,
         },
     ));

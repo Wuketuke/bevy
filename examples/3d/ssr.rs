@@ -21,6 +21,13 @@ use bevy::{
     },
 };
 
+const LOGO_PATH: &str = "branding/icon.png";
+const MODEL_PATH: &str = "models/FlightHelmet/FlightHelmet.gltf";
+const WATER_NORMALS_PATH: &str = "textures/water_normals.png";
+const WATER_MATERIAL_PATH: &str = "shaders/water_material.wgsl";
+const ENVIROMENT_DIFFUSE_PATH: &str = "environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2";
+const ENVIROMENT_SPECULAR_PATH: &str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+
 // The speed of camera movement.
 const CAMERA_KEYBOARD_ZOOM_SPEED: f32 = 0.1;
 const CAMERA_KEYBOARD_ORBIT_SPEED: f32 = 0.02;
@@ -151,7 +158,7 @@ fn spawn_cube(
             mesh: meshes.add(Cuboid::new(1.0, 1.0, 1.0)),
             material: standard_materials.add(StandardMaterial {
                 base_color: Color::from(WHITE),
-                base_color_texture: Some(asset_server.load("branding/icon.png")),
+                base_color_texture: Some(asset_server.load(LOGO_PATH)),
                 ..default()
             }),
             transform: Transform::from_xyz(0.0, 0.5, 0.0),
@@ -164,8 +171,7 @@ fn spawn_cube(
 fn spawn_flight_helmet(commands: &mut Commands, asset_server: &AssetServer) {
     commands
         .spawn(SceneBundle {
-            scene: asset_server
-                .load(GltfAssetLabel::Scene(0).from_asset("models/FlightHelmet/FlightHelmet.gltf")),
+            scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(MODEL_PATH)),
             transform: Transform::from_scale(Vec3::splat(2.5)),
             ..default()
         })
@@ -190,7 +196,7 @@ fn spawn_water(
             },
             extension: Water {
                 normals: asset_server.load_with_settings::<Image, ImageLoaderSettings>(
-                    "textures/water_normals.png",
+                    WATER_NORMALS_PATH,
                     |settings| {
                         settings.is_srgb = false;
                         settings.sampler = ImageSampler::Descriptor(ImageSamplerDescriptor {
@@ -236,12 +242,12 @@ fn spawn_camera(commands: &mut Commands, asset_server: &AssetServer) {
             ..default()
         })
         .insert(EnvironmentMapLight {
-            diffuse_map: asset_server.load("environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2"),
-            specular_map: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            diffuse_map: asset_server.load(ENVIROMENT_DIFFUSE_PATH),
+            specular_map: asset_server.load(ENVIROMENT_SPECULAR_PATH),
             intensity: 5000.0,
         })
         .insert(Skybox {
-            image: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            image: asset_server.load(ENVIROMENT_SPECULAR_PATH),
             brightness: 5000.0,
         })
         .insert(ScreenSpaceReflectionsBundle::default())
@@ -286,7 +292,7 @@ fn create_text(app_settings: &AppSettings) -> Text {
 
 impl MaterialExtension for Water {
     fn deferred_fragment_shader() -> ShaderRef {
-        "shaders/water_material.wgsl".into()
+        WATER_MATERIAL_PATH.into()
     }
 }
 

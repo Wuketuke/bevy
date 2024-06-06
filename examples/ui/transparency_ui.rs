@@ -3,6 +3,8 @@
 
 use bevy::prelude::*;
 
+const FONT_PATH: &str = "fonts/FiraSans-Bold.ttf";
+
 fn main() {
     App::new()
         .insert_resource(ClearColor(Color::BLACK))
@@ -14,7 +16,7 @@ fn main() {
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2dBundle::default());
 
-    let font_handle = asset_server.load("fonts/FiraSans-Bold.ttf");
+    let font_handle = asset_server.load(FONT_PATH);
 
     commands
         .spawn(NodeBundle {

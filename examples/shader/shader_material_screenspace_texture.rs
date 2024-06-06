@@ -6,6 +6,10 @@ use bevy::{
     render::render_resource::{AsBindGroup, ShaderRef},
 };
 
+const MODEL_PATH: &str =
+    "models/FlightHelmet/FlightHelmet_Materials_LensesMat_OcclusionRoughMetal.png";
+const SHADER_PATH: &str = "shaders/custom_material_screenspace_texture.wgsl";
+
 fn main() {
     App::new()
         .add_plugins((DefaultPlugins, MaterialPlugin::<CustomMaterial>::default()))
@@ -38,9 +42,7 @@ fn setup(
         mesh: meshes.add(Cuboid::default()),
         transform: Transform::from_xyz(0.0, 0.5, 0.0),
         material: custom_materials.add(CustomMaterial {
-            texture: asset_server.load(
-                "models/FlightHelmet/FlightHelmet_Materials_LensesMat_OcclusionRoughMetal.png",
-            ),
+            texture: asset_server.load(MODEL_PATH),
         }),
         ..default()
     });
@@ -74,6 +76,6 @@ struct CustomMaterial {
 
 impl Material for CustomMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/custom_material_screenspace_texture.wgsl".into()
+        SHADER_PATH.into()
     }
 }

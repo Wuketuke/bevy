@@ -2,6 +2,8 @@
 
 use bevy::prelude::*;
 
+const SOUND_PATH: &str = "sounds/Windless Slopes.ogg";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -13,7 +15,7 @@ fn main() {
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         AudioBundle {
-            source: asset_server.load("sounds/Windless Slopes.ogg"),
+            source: asset_server.load(SOUND_PATH),
             ..default()
         },
         MyMusic,

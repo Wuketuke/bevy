@@ -13,6 +13,8 @@
 use bevy::{color::palettes::css::ORANGE, prelude::*};
 use rand::random;
 
+const FONT_PATH: &str = "fonts/FiraMono-Medium.ttf";
+
 fn main() {
     let mut app = App::new();
 
@@ -180,12 +182,12 @@ fn setup(
 
     // Controls Text
     let text_style = TextStyle {
-        font: asset_server.load("fonts/FiraMono-Medium.ttf"),
+        font: asset_server.load(FONT_PATH),
         ..default()
     };
 
     let label_text_style = TextStyle {
-        font: asset_server.load("fonts/FiraMono-Medium.ttf"),
+        font: asset_server.load(FONT_PATH),
         font_size: 25.0,
         color: ORANGE.into(),
     };

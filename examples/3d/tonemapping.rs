@@ -13,6 +13,12 @@ use bevy::{
 };
 use std::f32::consts::PI;
 
+const ENVIROMENT_DIFFUSE_PATH: &str = "environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2";
+const ENVIROMENT_SPECULAR_PATH: &str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+const SHADER_PATH: &str = "shaders/tonemapping_test_patterns.wgsl";
+const MODEL_PATH: &str = "models/FlightHelmet/FlightHelmet.gltf";
+const TONEMAPTEST_MODEL_PATH: &str = "models/TonemappingTest/TonemappingTest.gltf";
+
 fn main() {
     App::new()
         .add_plugins((
@@ -72,8 +78,8 @@ fn setup(
             ..default()
         },
         EnvironmentMapLight {
-            diffuse_map: asset_server.load("environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2"),
-            specular_map: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            diffuse_map: asset_server.load(ENVIROMENT_DIFFUSE_PATH),
+            specular_map: asset_server.load(ENVIROMENT_SPECULAR_PATH),
             intensity: 2000.0,
         },
     ));
@@ -93,9 +99,7 @@ fn setup_basic_scene(mut commands: Commands, asset_server: Res<AssetServer>) {
     // Main scene
     commands
         .spawn(SceneBundle {
-            scene: asset_server.load(
-                GltfAssetLabel::Scene(0).from_asset("models/TonemappingTest/TonemappingTest.gltf"),
-            ),
+            scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(TONEMAPTEST_MODEL_PATH)),
             ..default()
         })
         .insert(SceneNumber(1));
@@ -103,8 +107,7 @@ fn setup_basic_scene(mut commands: Commands, asset_server: Res<AssetServer>) {
     // Flight Helmet
     commands.spawn((
         SceneBundle {
-            scene: asset_server
-                .load(GltfAssetLabel::Scene(0).from_asset("models/FlightHelmet/FlightHelmet.gltf")),
+            scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(MODEL_PATH)),
             transform: Transform::from_xyz(0.5, 0.0, -0.5)
                 .with_rotation(Quat::from_rotation_y(-0.15 * PI)),
             ..default()
@@ -600,7 +603,7 @@ impl Default for PerMethodSettings {
 
 impl Material for ColorGradientMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/tonemapping_test_patterns.wgsl".into()
+        SHADER_PATH.into()
     }
 }
 

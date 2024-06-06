@@ -12,6 +12,8 @@ use bevy::{
     text::{BreakLineOn, Text2dBounds},
 };
 
+const FONT_PATH: &str = "fonts/FiraSans-Bold.ttf";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -33,7 +35,7 @@ struct AnimateRotation;
 struct AnimateScale;
 
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let font = asset_server.load("fonts/FiraSans-Bold.ttf");
+    let font = asset_server.load(FONT_PATH);
     let text_style = TextStyle {
         font: font.clone(),
         font_size: 60.0,

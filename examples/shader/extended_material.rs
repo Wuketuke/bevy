@@ -7,6 +7,8 @@ use bevy::{
     render::render_resource::*,
 };
 
+const SHADER_PATH: &str = "shaders/extended_material.wgsl";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -79,10 +81,10 @@ struct MyExtension {
 
 impl MaterialExtension for MyExtension {
     fn fragment_shader() -> ShaderRef {
-        "shaders/extended_material.wgsl".into()
+        SHADER_PATH.into()
     }
 
     fn deferred_fragment_shader() -> ShaderRef {
-        "shaders/extended_material.wgsl".into()
+        SHADER_PATH.into()
     }
 }

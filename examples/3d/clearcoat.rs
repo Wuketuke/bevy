@@ -34,6 +34,12 @@ const SPHERE_SCALE: f32 = 0.9;
 /// The speed at which the spheres rotate, in radians per second.
 const SPHERE_ROTATION_SPEED: f32 = 0.8;
 
+const NOISE_PATH: &str = "textures/BlueNoise-Normal.png";
+const GOLD_TEXTURE_PATH: &str = "textures/ScratchedGold-Normal.png";
+const GOLF_MODEL_PATH: &str = "models/GolfBall/GolfBall.glb";
+const SPECULAR_PATH: &str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+const DIFFUSE_PATH: &str = "environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2";
+
 /// Which type of light we're using: a point light or a directional light.
 #[derive(Clone, Copy, PartialEq, Resource, Default)]
 enum LightMode {
@@ -102,10 +108,12 @@ fn spawn_car_paint_sphere(
             material: materials.add(StandardMaterial {
                 clearcoat: 1.0,
                 clearcoat_perceptual_roughness: 0.1,
-                normal_map_texture: Some(asset_server.load_with_settings(
-                    "textures/BlueNoise-Normal.png",
-                    |settings: &mut ImageLoaderSettings| settings.is_srgb = false,
-                )),
+                normal_map_texture: Some(
+                    asset_server
+                        .load_with_settings(NOISE_PATH, |settings: &mut ImageLoaderSettings| {
+                            settings.is_srgb = false
+                        }),
+                ),
                 metallic: 0.9,
                 perceptual_roughness: 0.5,
                 base_color: BLUE.into(),
@@ -149,8 +157,7 @@ fn spawn_coated_glass_bubble_sphere(
 fn spawn_golf_ball(commands: &mut Commands, asset_server: &AssetServer) {
     commands
         .spawn(SceneBundle {
-            scene: asset_server
-                .load(GltfAssetLabel::Scene(0).from_asset("models/GolfBall/GolfBall.glb")),
+            scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(GOLF_MODEL_PATH)),
             transform: Transform::from_xyz(1.0, 1.0, 0.0).with_scale(Vec3::splat(SPHERE_SCALE)),
             ..default()
         })
@@ -172,7 +179,7 @@ fn spawn_scratched_gold_ball(
                 clearcoat: 1.0,
                 clearcoat_perceptual_roughness: 0.3,
                 clearcoat_normal_texture: Some(asset_server.load_with_settings(
-                    "textures/ScratchedGold-Normal.png",
+                    GOLD_TEXTURE_PATH,
                     |settings: &mut ImageLoaderSettings| settings.is_srgb = false,
                 )),
                 metallic: 0.9,
@@ -223,11 +230,11 @@ fn spawn_camera(commands: &mut Commands, asset_server: &AssetServer) {
         })
         .insert(Skybox {
             brightness: 5000.0,
-            image: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            image: asset_server.load(SPECULAR_PATH),
         })
         .insert(EnvironmentMapLight {
-            diffuse_map: asset_server.load("environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2"),
-            specular_map: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            diffuse_map: asset_server.load(DIFFUSE_PATH),
+            specular_map: asset_server.load(SPECULAR_PATH),
             intensity: 2000.0,
         });
 }

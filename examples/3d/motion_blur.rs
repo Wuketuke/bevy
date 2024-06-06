@@ -6,6 +6,8 @@ use bevy::{
     prelude::*,
 };
 
+const LOGO_PATH: &str = "branding/icon.png";
+
 fn main() {
     let mut app = App::new();
 
@@ -117,7 +119,7 @@ fn spawn_cars(
     const N_CARS: usize = 20;
     let box_mesh = meshes.add(Cuboid::new(0.3, 0.15, 0.55));
     let cylinder = meshes.add(Cylinder::default());
-    let logo = asset_server.load("branding/icon.png");
+    let logo = asset_server.load(LOGO_PATH);
     let wheel_matl = materials.add(StandardMaterial {
         base_color: Color::WHITE,
         base_color_texture: Some(logo.clone()),

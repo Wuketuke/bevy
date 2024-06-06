@@ -14,6 +14,12 @@ use std::{
     fmt::{Display, Formatter, Result as FmtResult},
 };
 
+const MODEL_PATH: &str = "models/cubes/Cubes.glb";
+const ENVIROMENT_DIFFUSE_PATH: &str = "environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2";
+const ENVIROMENT_SPECULAR_PATH: &str =
+    "environment_maps/cubes_reflection_probe_specular_rgb9e5_zstd.ktx2";
+const SKYBOX_PATH: &str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+
 static STOP_ROTATION_HELP_TEXT: &str = "Press Enter to stop rotation";
 static START_ROTATION_HELP_TEXT: &str = "Press Enter to start rotation";
 
@@ -98,7 +104,7 @@ fn setup(
 // Spawns the cubes, light, and camera.
 fn spawn_scene(commands: &mut Commands, asset_server: &AssetServer) {
     commands.spawn(SceneBundle {
-        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/cubes/Cubes.glb")),
+        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(MODEL_PATH)),
         ..SceneBundle::default()
     });
 }
@@ -326,12 +332,11 @@ impl FromWorld for Cubemaps {
         // Just use the specular map for the skybox since it's not too blurry.
         // In reality you wouldn't do this--you'd use a real skybox texture--but
         // reusing the textures like this saves space in the Bevy repository.
-        let specular_map = world.load_asset("environment_maps/pisa_specular_rgb9e5_zstd.ktx2");
+        let specular_map = world.load_asset(SKYBOX_PATH);
 
         Cubemaps {
-            diffuse: world.load_asset("environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2"),
-            specular_reflection_probe: world
-                .load_asset("environment_maps/cubes_reflection_probe_specular_rgb9e5_zstd.ktx2"),
+            diffuse: world.load_asset(ENVIROMENT_DIFFUSE_PATH),
+            specular_reflection_probe: world.load_asset(ENVIROMENT_SPECULAR_PATH),
             specular_environment_map: specular_map.clone(),
             skybox: specular_map,
         }

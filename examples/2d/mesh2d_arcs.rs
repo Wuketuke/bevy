@@ -10,6 +10,7 @@ use bevy::{
     render::mesh::{CircularMeshUvMode, CircularSectorMeshBuilder, CircularSegmentMeshBuilder},
     sprite::MaterialMesh2dBundle,
 };
+const LOGO_PATH: &str = "branding/icon.png";
 
 fn main() {
     App::new()
@@ -34,7 +35,7 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<ColorMaterial>>,
 ) {
-    let material = materials.add(asset_server.load("branding/icon.png"));
+    let material = materials.add(asset_server.load(LOGO_PATH));
 
     commands.spawn(Camera2dBundle {
         camera: Camera {

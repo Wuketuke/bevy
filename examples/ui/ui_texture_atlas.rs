@@ -2,6 +2,8 @@
 
 use bevy::{color::palettes::css::*, prelude::*, winit::WinitSettings};
 
+const SPRITE_ANIMATION_PATH: &str = "textures/rpg/chars/gabe/gabe-idle-run.png";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(
@@ -27,7 +29,7 @@ fn setup(
 
     let text_style = TextStyle::default();
 
-    let texture_handle = asset_server.load("textures/rpg/chars/gabe/gabe-idle-run.png");
+    let texture_handle = asset_server.load(SPRITE_ANIMATION_PATH);
     let texture_atlas = TextureAtlasLayout::from_grid(UVec2::splat(24), 7, 1, None, None);
     let texture_atlas_handle = texture_atlases.add(texture_atlas);
 

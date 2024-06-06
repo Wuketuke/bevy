@@ -11,6 +11,9 @@ use bevy::{
     winit::WinitSettings,
 };
 
+const FONT_PATH: &str = "fonts/FiraSans-Bold.ttf";
+const LOGO_PATH: &str = "branding/bevy_logo_dark_big.png";
+
 fn main() {
     let mut app = App::new();
     app.add_plugins(DefaultPlugins)
@@ -75,7 +78,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                                 TextBundle::from_section(
                                     "Text Example",
                                     TextStyle {
-                                        font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                                        font: asset_server.load(FONT_PATH),
                                         font_size: 30.0,
                                         ..default()
                                     },
@@ -92,7 +95,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                                 TextBundle::from_section(
                                     "Press Space to enable debug outlines.",
                                     TextStyle {
-                                        font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                                        font: asset_server.load(FONT_PATH),
                                         ..default()
                                     },
                                 ),
@@ -104,7 +107,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                                 TextBundle::from_section(
                                     "Try enabling feature \"bevy_dev_tools\".",
                                     TextStyle {
-                                        font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                                        font: asset_server.load(FONT_PATH),
                                         ..default()
                                     },
                                 ),
@@ -131,7 +134,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                         TextBundle::from_section(
                             "Scrolling list",
                             TextStyle {
-                                font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                                font: asset_server.load(FONT_PATH),
                                 font_size: 25.,
                                 ..default()
                             },
@@ -173,8 +176,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                                             TextBundle::from_section(
                                                 format!("Item {i}"),
                                                 TextStyle {
-                                                    font: asset_server
-                                                        .load("fonts/FiraSans-Bold.ttf"),
+                                                    font: asset_server.load(FONT_PATH),
                                                     ..default()
                                                 },
                                             ),
@@ -315,7 +317,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                                 },
                                 ..default()
                             },
-                            UiImage::new(asset_server.load("branding/bevy_logo_dark_big.png")),
+                            UiImage::new(asset_server.load(LOGO_PATH)),
                         ))
                         .with_children(|parent| {
                             // alt text

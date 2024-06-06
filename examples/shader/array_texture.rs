@@ -8,6 +8,9 @@ use bevy::{
     render::render_resource::{AsBindGroup, ShaderRef},
 };
 
+const TEXTURE_ARRAY_PATH: &str = "textures/array_texture.png";
+const SHADER_PATH: &str = "shaders/array_texture.wgsl";
+
 fn main() {
     App::new()
         .add_plugins((
@@ -29,7 +32,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     // Start loading the texture.
     commands.insert_resource(LoadingTexture {
         is_loaded: false,
-        handle: asset_server.load("textures/array_texture.png"),
+        handle: asset_server.load(TEXTURE_ARRAY_PATH),
     });
 
     // light
@@ -89,6 +92,6 @@ struct ArrayTextureMaterial {
 
 impl Material for ArrayTextureMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/array_texture.wgsl".into()
+        SHADER_PATH.into()
     }
 }

@@ -1,5 +1,7 @@
 use bevy::{app::MainScheduleOrder, ecs::schedule::*, prelude::*};
 
+const FONT_PATH: &str = "fonts/FiraSans-Bold.ttf";
+
 /// Independent [`Schedule`] for stepping systems.
 ///
 /// The stepping systems must run in their own schedule to be able to inspect
@@ -86,7 +88,7 @@ fn initialized(state: Res<State>) -> bool {
 }
 
 const FONT_COLOR: Color = Color::srgb(0.2, 0.2, 0.2);
-const FONT_BOLD: &str = "fonts/FiraSans-Bold.ttf";
+const FONT_BOLD: &str = FONT_PATH;
 
 #[derive(Component)]
 struct SteppingUi;

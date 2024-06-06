@@ -10,6 +10,8 @@ fn main() {
         .run();
 }
 
+const LOGO_PATH:&str = "branding/icon.png";
+
 #[derive(Component)]
 enum Direction {
     Up,
@@ -20,7 +22,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2dBundle::default());
     commands.spawn((
         SpriteBundle {
-            texture: asset_server.load("branding/icon.png"),
+            texture: asset_server.load(LOGO_PATH),
             transform: Transform::from_xyz(100., 0., 0.),
             ..default()
         },

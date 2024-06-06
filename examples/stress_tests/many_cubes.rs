@@ -28,6 +28,8 @@ use bevy::{
 use rand::{seq::SliceRandom, Rng, SeedableRng};
 use rand_chacha::ChaCha8Rng;
 
+const WARNING_FILE_PATH: &str = "warning_string.txt";
+
 #[derive(FromArgs, Resource)]
 /// `many_cubes` stress test
 struct Args {
@@ -135,7 +137,7 @@ fn setup(
     material_assets: ResMut<Assets<StandardMaterial>>,
     images: ResMut<Assets<Image>>,
 ) {
-    warn!(include_str!("warning_string.txt"));
+    warn!(include_str!(WARNING_FILE_PATH));
 
     let args = args.into_inner();
     let images = images.into_inner();

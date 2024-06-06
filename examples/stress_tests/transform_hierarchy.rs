@@ -21,6 +21,8 @@
 use bevy::prelude::*;
 use rand::Rng;
 
+const WARNING_FILE_PATH: &str = "warning_string.txt";
+
 /// pre-defined test configurations with name
 const CONFIGS: [(&str, Cfg); 9] = [
     (
@@ -258,7 +260,7 @@ fn set_translation(translation: &mut Vec3, a: f32) {
 }
 
 fn setup(mut commands: Commands, cfg: Res<Cfg>) {
-    warn!(include_str!("warning_string.txt"));
+    warn!(include_str!(WARNING_FILE_PATH));
 
     let mut cam = Camera2dBundle::default();
 

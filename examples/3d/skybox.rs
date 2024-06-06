@@ -16,23 +16,16 @@ use bevy::{
 use camera_controller::{CameraController, CameraControllerPlugin};
 use std::f32::consts::PI;
 
+const CUBEMAP_NONE_PATH: &str = "textures/Ryfjallet_cubemap.png";
+const CUBEMAP_ASTC_LDR_PATH: &str = "textures/Ryfjallet_cubemap_astc4x4.ktx2";
+const CUBEMAP_BC_PATH: &str = "textures/Ryfjallet_cubemap_bc7.ktx2";
+const CUBEMAP_ETC2_PATH: &str = "textures/Ryfjallet_cubemap_etc2.ktx2";
+
 const CUBEMAPS: &[(&str, CompressedImageFormats)] = &[
-    (
-        "textures/Ryfjallet_cubemap.png",
-        CompressedImageFormats::NONE,
-    ),
-    (
-        "textures/Ryfjallet_cubemap_astc4x4.ktx2",
-        CompressedImageFormats::ASTC_LDR,
-    ),
-    (
-        "textures/Ryfjallet_cubemap_bc7.ktx2",
-        CompressedImageFormats::BC,
-    ),
-    (
-        "textures/Ryfjallet_cubemap_etc2.ktx2",
-        CompressedImageFormats::ETC2,
-    ),
+    (CUBEMAP_NONE_PATH, CompressedImageFormats::NONE),
+    (CUBEMAP_ASTC_LDR_PATH, CompressedImageFormats::ASTC_LDR),
+    (CUBEMAP_BC_PATH, CompressedImageFormats::BC),
+    (CUBEMAP_ETC2_PATH, CompressedImageFormats::ETC2),
 ];
 
 fn main() {

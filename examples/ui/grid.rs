@@ -1,6 +1,8 @@
 //! Demonstrates how CSS Grid layout can be used to lay items out in a 2D grid
 use bevy::{color::palettes::css::*, prelude::*};
 
+const FONT_PATH: &str = "fonts/FiraSans-Bold.ttf";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
@@ -16,7 +18,7 @@ fn main() {
 }
 
 fn spawn_layout(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let font = asset_server.load("fonts/FiraSans-Bold.ttf");
+    let font = asset_server.load(FONT_PATH);
     commands.spawn(Camera2dBundle::default());
 
     // Top-level grid (app frame)

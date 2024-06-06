@@ -9,6 +9,8 @@ use bevy::render::{
     render_resource::PrimitiveTopology,
 };
 
+const TEXTURES_PATH:&str = "textures/array_texture.png";
+
 // Define a "marker" component to mark the custom mesh. Marker components are often used in Bevy for
 // filtering entities in queries with With, they're usually not queried directly since they don't contain information within them.
 #[derive(Component)]
@@ -29,7 +31,7 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
 ) {
     // Import the custom texture.
-    let custom_texture_handle: Handle<Image> = asset_server.load("textures/array_texture.png");
+    let custom_texture_handle: Handle<Image> = asset_server.load(TEXTURES_PATH);
     // Create and save a handle to the mesh.
     let cube_mesh_handle: Handle<Mesh> = meshes.add(create_cube_mesh());
 

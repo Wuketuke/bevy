@@ -20,6 +20,8 @@ use bevy::{
 
 use custom_transitions::*;
 
+const LOGO_PATH: &str = "branding/icon.png";
+
 #[derive(Debug, Clone, Copy, Default, Eq, PartialEq, Hash, States)]
 enum AppState {
     #[default]
@@ -225,7 +227,7 @@ fn setup(mut commands: Commands) {
 
 fn setup_game(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(SpriteBundle {
-        texture: asset_server.load("branding/icon.png"),
+        texture: asset_server.load(LOGO_PATH),
         ..default()
     });
 }

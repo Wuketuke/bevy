@@ -31,6 +31,8 @@ use bevy::{
     },
 };
 
+const SHADER_PATH: &str = "shaders/post_processing.wgsl";
+
 fn main() {
     App::new()
         .add_plugins((DefaultPlugins, PostProcessPlugin))
@@ -249,7 +251,7 @@ impl FromWorld for PostProcessPipeline {
         let sampler = render_device.create_sampler(&SamplerDescriptor::default());
 
         // Get the shader handle
-        let shader = world.load_asset("shaders/post_processing.wgsl");
+        let shader = world.load_asset(SHADER_PATH);
 
         let pipeline_id = world
             .resource_mut::<PipelineCache>()

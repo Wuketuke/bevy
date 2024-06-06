@@ -5,6 +5,8 @@ use std::f32::consts::*;
 
 use bevy::{prelude::*, render::mesh::skinning::SkinnedMesh};
 
+const MODEL_PATH: &str = "models/SimpleSkin/SimpleSkin.gltf";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -27,8 +29,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 
     // Spawn the first scene in `models/SimpleSkin/SimpleSkin.gltf`
     commands.spawn(SceneBundle {
-        scene: asset_server
-            .load(GltfAssetLabel::Scene(0).from_asset("models/SimpleSkin/SimpleSkin.gltf")),
+        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(MODEL_PATH)),
         ..default()
     });
 }

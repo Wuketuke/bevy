@@ -2,6 +2,9 @@
 
 use bevy::{asset::LoadState, prelude::*};
 
+const ENVIROMENT_DIFFUSE_PATH: &str = "environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2";
+const ENVIROMENT_SPECULAR_PATH: &str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -127,8 +130,8 @@ fn setup(
             ..default()
         },
         EnvironmentMapLight {
-            diffuse_map: asset_server.load("environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2"),
-            specular_map: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            diffuse_map: asset_server.load(ENVIROMENT_DIFFUSE_PATH),
+            specular_map: asset_server.load(ENVIROMENT_SPECULAR_PATH),
             intensity: 900.0,
         },
     ));

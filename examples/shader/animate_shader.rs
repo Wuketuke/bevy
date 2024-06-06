@@ -7,6 +7,8 @@ use bevy::{
     render::render_resource::{AsBindGroup, ShaderRef},
 };
 
+const SHADER_PATH: &str = "shaders/animate_shader.wgsl";
+
 fn main() {
     App::new()
         .add_plugins((DefaultPlugins, MaterialPlugin::<CustomMaterial>::default()))
@@ -39,6 +41,6 @@ struct CustomMaterial {}
 
 impl Material for CustomMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/animate_shader.wgsl".into()
+        SHADER_PATH.into()
     }
 }

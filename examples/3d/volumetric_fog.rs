@@ -9,6 +9,9 @@ use bevy::{
 
 const DIRECTIONAL_LIGHT_MOVEMENT_SPEED: f32 = 0.02;
 
+const SCENE_PATH: &str = "models/VolumetricFogExample/VolumetricFogExample.glb";
+const SKYBOX_PATH: &str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -29,10 +32,7 @@ fn main() {
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     // Spawn the glTF scene.
     commands.spawn(SceneBundle {
-        scene: asset_server.load(
-            GltfAssetLabel::Scene(0)
-                .from_asset("models/VolumetricFogExample/VolumetricFogExample.glb"),
-        ),
+        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(SCENE_PATH)),
         ..default()
     });
 
@@ -50,7 +50,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         .insert(Tonemapping::TonyMcMapface)
         .insert(BloomSettings::default())
         .insert(Skybox {
-            image: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            image: asset_server.load(SKYBOX_PATH),
             brightness: 1000.0,
         })
         .insert(VolumetricFogSettings {

@@ -3,6 +3,10 @@
 
 use bevy::{pbr::DirectionalLightShadowMap, prelude::*};
 
+const ENVIROMENT_DIFFUSE_PATH: &str = "environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2";
+const ENVIROMENT_SPECULAR_PATH: &str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+const MODEL_PATH: &str = "models/FlightHelmet/FlightHelmet.gltf";
+
 fn main() {
     App::new()
         .insert_resource(DirectionalLightShadowMap { size: 4096 })
@@ -31,8 +35,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             ..default()
         },
         EnvironmentMapLight {
-            diffuse_map: asset_server.load("environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2"),
-            specular_map: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            diffuse_map: asset_server.load(ENVIROMENT_DIFFUSE_PATH),
+            specular_map: asset_server.load(ENVIROMENT_SPECULAR_PATH),
             intensity: 150.0,
         },
     ));
@@ -40,8 +44,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     // Spawn the scene as a child of this entity at the given transform
     commands.spawn(SceneBundle {
         transform: Transform::from_xyz(-1.0, 0.0, 0.0),
-        scene: asset_server
-            .load(GltfAssetLabel::Scene(0).from_asset("models/FlightHelmet/FlightHelmet.gltf")),
+        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(MODEL_PATH)),
         ..default()
     });
 
@@ -49,7 +52,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         SceneBundle {
             scene: asset_server
-                .load(GltfAssetLabel::Scene(0).from_asset("models/FlightHelmet/FlightHelmet.gltf")),
+                .load(GltfAssetLabel::Scene(0).from_asset(MODEL_PATH)),
             ..default()
         },
         MovedScene,

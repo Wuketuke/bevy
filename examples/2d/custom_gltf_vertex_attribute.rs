@@ -17,6 +17,7 @@ use bevy::{
 /// the fragment shader indicates proximity to a corner or the opposite edge.
 const ATTRIBUTE_BARYCENTRIC: MeshVertexAttribute =
     MeshVertexAttribute::new("Barycentric", 2137464976, VertexFormat::Float32x3);
+const MODEL_PATH:&str = "models/barycentric/barycentric.gltf";
 
 fn main() {
     App::new()
@@ -47,7 +48,7 @@ fn setup(
             mesh: 0,
             primitive: 0,
         }
-        .from_asset("models/barycentric/barycentric.gltf"),
+        .from_asset(MODEL_PATH),
     );
     commands.spawn(MaterialMesh2dBundle {
         mesh: Mesh2dHandle(mesh),

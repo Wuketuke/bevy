@@ -7,6 +7,9 @@ use bevy::{
     sprite::{Material2d, Material2dPlugin, MaterialMesh2dBundle},
 };
 
+const LOGO_PATH: &str = "branding/icon.png";
+const SHADER_PATH: &str = "shaders/custom_material_2d.wgsl";
+
 fn main() {
     App::new()
         .add_plugins((
@@ -33,7 +36,7 @@ fn setup(
         transform: Transform::default().with_scale(Vec3::splat(128.)),
         material: materials.add(CustomMaterial {
             color: LinearRgba::BLUE,
-            color_texture: Some(asset_server.load("branding/icon.png")),
+            color_texture: Some(asset_server.load(LOGO_PATH)),
         }),
         ..default()
     });
@@ -53,6 +56,6 @@ struct CustomMaterial {
 /// You only need to implement functions for features that need non-default behavior. See the Material2d api docs for details!
 impl Material2d for CustomMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/custom_material_2d.wgsl".into()
+        SHADER_PATH.into()
     }
 }

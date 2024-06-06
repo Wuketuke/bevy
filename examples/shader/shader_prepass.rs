@@ -10,6 +10,10 @@ use bevy::{
     render::render_resource::{AsBindGroup, ShaderRef, ShaderType},
 };
 
+const LOGO_PATH: &str = "branding/icon.png";
+const SHADER_PATH: &str = "shaders/custom_material.wgsl";
+const SHADER_PREPASS_PATH: &str = "shaders/show_prepass.wgsl";
+
 fn main() {
     App::new()
         .add_plugins((
@@ -88,7 +92,7 @@ fn setup(
             mesh: meshes.add(Cuboid::default()),
             material: materials.add(CustomMaterial {
                 color: LinearRgba::WHITE,
-                color_texture: Some(asset_server.load("branding/icon.png")),
+                color_texture: Some(asset_server.load(LOGO_PATH)),
                 alpha_mode: AlphaMode::Opaque,
             }),
             transform: Transform::from_xyz(-1.0, 0.5, 0.0),
@@ -102,7 +106,7 @@ fn setup(
         mesh: meshes.add(Cuboid::default()),
         material: std_materials.add(StandardMaterial {
             alpha_mode: AlphaMode::Mask(1.0),
-            base_color_texture: Some(asset_server.load("branding/icon.png")),
+            base_color_texture: Some(asset_server.load(LOGO_PATH)),
             ..default()
         }),
         transform: Transform::from_xyz(0.0, 0.5, 0.0),
@@ -115,7 +119,7 @@ fn setup(
         mesh: meshes.add(Cuboid::default()),
         material: materials.add(CustomMaterial {
             color: LinearRgba::WHITE,
-            color_texture: Some(asset_server.load("branding/icon.png")),
+            color_texture: Some(asset_server.load(LOGO_PATH)),
             alpha_mode: AlphaMode::Blend,
         }),
         transform: Transform::from_xyz(1.0, 0.5, 0.0),
@@ -166,7 +170,7 @@ struct CustomMaterial {
 /// function will also be used by the prepass
 impl Material for CustomMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/custom_material.wgsl".into()
+        SHADER_PATH.into()
     }
 
     fn alpha_mode(&self) -> AlphaMode {
@@ -208,7 +212,7 @@ struct PrepassOutputMaterial {
 
 impl Material for PrepassOutputMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/show_prepass.wgsl".into()
+        SHADER_PREPASS_PATH.into()
     }
 
     // This needs to be transparent in order to show the scene behind the mesh

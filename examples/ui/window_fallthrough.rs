@@ -4,6 +4,8 @@
 
 use bevy::prelude::*;
 
+const FONT_PATH: &str = "fonts/FiraSans-Bold.ttf";
+
 fn main() {
     App::new()
         .insert_resource(ClearColor(Color::NONE)) // Use a transparent window, to make effects obvious.
@@ -32,7 +34,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             // Accepts a `String` or any type that converts into a `String`, such as `&str`
             "Hit 'P' then scroll/click around!",
             TextStyle {
-                font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                font: asset_server.load(FONT_PATH),
                 font_size: 100.0, // Nice and big so you can see it!
                 ..default()
             },

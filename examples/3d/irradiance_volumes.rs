@@ -22,6 +22,12 @@ use bevy::prelude::*;
 use bevy::render::render_resource::{AsBindGroup, ShaderRef, ShaderType};
 use bevy::window::PrimaryWindow;
 
+const FOX_MODEL_PATH: &str = "models/animated/Fox.glb";
+const SCENE_MODEL_PATH: &str = "models/IrradianceVolumeExample/IrradianceVolumeExample.glb";
+const IRRADIANCE_VOLUME_PATH: &str = "irradiance_volumes/Example.vxgi.ktx2";
+const SPECULAR_PATH: &str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+const SHADER_PATH: &str = "shaders/irradiance_volume_voxel_visualization.wgsl";
+
 // Rotation speed in radians per frame.
 const ROTATION_SPEED: f32 = 0.2;
 
@@ -504,26 +510,23 @@ fn handle_mouse_clicks(
 impl FromWorld for ExampleAssets {
     fn from_world(world: &mut World) -> Self {
         let fox_animation =
-            world.load_asset(GltfAssetLabel::Animation(1).from_asset("models/animated/Fox.glb"));
+            world.load_asset(GltfAssetLabel::Animation(1).from_asset(FOX_MODEL_PATH));
         let (fox_animation_graph, fox_animation_node) =
             AnimationGraph::from_clip(fox_animation.clone());
 
         ExampleAssets {
             main_sphere: world.add_asset(Sphere::default().mesh().uv(32, 18)),
-            fox: world.load_asset(GltfAssetLabel::Scene(0).from_asset("models/animated/Fox.glb")),
+            fox: world.load_asset(GltfAssetLabel::Scene(0).from_asset(FOX_MODEL_PATH)),
             main_sphere_material: world.add_asset(Color::from(SILVER)),
-            main_scene: world.load_asset(
-                GltfAssetLabel::Scene(0)
-                    .from_asset("models/IrradianceVolumeExample/IrradianceVolumeExample.glb"),
-            ),
-            irradiance_volume: world.load_asset("irradiance_volumes/Example.vxgi.ktx2"),
+            main_scene: world.load_asset(GltfAssetLabel::Scene(0).from_asset(SCENE_MODEL_PATH)),
+            irradiance_volume: world.load_asset(IRRADIANCE_VOLUME_PATH),
             fox_animation_graph: world.add_asset(fox_animation_graph),
             fox_animation_node,
             voxel_cube: world.add_asset(Cuboid::default()),
             // Just use a specular map for the skybox since it's not too blurry.
             // In reality you wouldn't do this--you'd use a real skybox texture--but
             // reusing the textures like this saves space in the Bevy repository.
-            skybox: world.load_asset("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            skybox: world.load_asset(SPECULAR_PATH),
         }
     }
 }
@@ -650,6 +653,6 @@ fn toggle_voxel_visibility(
 
 impl MaterialExtension for VoxelVisualizationExtension {
     fn fragment_shader() -> ShaderRef {
-        "shaders/irradiance_volume_voxel_visualization.wgsl".into()
+        SHADER_PATH.into()
     }
 }

@@ -6,6 +6,9 @@ use bevy::{
     render::render_resource::{AsBindGroup, ShaderRef},
 };
 
+const LOGO_PATH: &str = "branding/icon.png";
+const SHADER_PATH: &str = "shaders/custom_material.wgsl";
+
 fn main() {
     App::new()
         .add_plugins((DefaultPlugins, MaterialPlugin::<CustomMaterial>::default()))
@@ -26,7 +29,7 @@ fn setup(
         transform: Transform::from_xyz(0.0, 0.5, 0.0),
         material: materials.add(CustomMaterial {
             color: LinearRgba::BLUE,
-            color_texture: Some(asset_server.load("branding/icon.png")),
+            color_texture: Some(asset_server.load(LOGO_PATH)),
             alpha_mode: AlphaMode::Blend,
         }),
         ..default()
@@ -54,7 +57,7 @@ struct CustomMaterial {
 /// You only need to implement functions for features that need non-default behavior. See the Material api docs for details!
 impl Material for CustomMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/custom_material.wgsl".into()
+        SHADER_PATH.into()
     }
 
     fn alpha_mode(&self) -> AlphaMode {

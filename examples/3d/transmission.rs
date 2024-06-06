@@ -40,6 +40,9 @@ use bevy::core_pipeline::experimental::taa::{
 };
 use rand::random;
 
+const ENVIROMENT_DIFFUSE_PATH:&str="environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2";
+const ENVIROMENT_SPECULAR_PATH:&str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+
 fn main() {
     let mut app = App::new();
 
@@ -358,8 +361,8 @@ fn setup(
         TemporalAntiAliasBundle::default(),
         EnvironmentMapLight {
             intensity: 25.0,
-            diffuse_map: asset_server.load("environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2"),
-            specular_map: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            diffuse_map: asset_server.load(ENVIROMENT_DIFFUSE_PATH),
+            specular_map: asset_server.load(ENVIROMENT_SPECULAR_PATH),
         },
         BloomSettings::default(),
     ));

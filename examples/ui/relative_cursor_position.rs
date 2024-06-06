@@ -4,6 +4,8 @@ use bevy::{
     prelude::*, render::camera::Viewport, ui::RelativeCursorPosition, winit::WinitSettings,
 };
 
+const FONT_PATH: &str = "fonts/FiraSans-Bold.ttf";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -58,7 +60,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                 text: Text::from_section(
                     "(0.0, 0.0)",
                     TextStyle {
-                        font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                        font: asset_server.load(FONT_PATH),
                         font_size: 40.0,
                         color: Color::srgb(0.9, 0.9, 0.9),
                     },

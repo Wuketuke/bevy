@@ -3,6 +3,8 @@
 
 use bevy::prelude::*;
 
+const LOGO_PATH: &str = "branding/icon.png";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -13,7 +15,7 @@ fn main() {
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2dBundle::default());
 
-    let sprite_handle = asset_server.load("branding/icon.png");
+    let sprite_handle = asset_server.load(LOGO_PATH);
 
     commands.spawn(SpriteBundle {
         texture: sprite_handle.clone(),

@@ -17,6 +17,9 @@ use bevy::{
 
 use rand::Rng;
 
+const LOGO_PATH: &str = "branding/icon.png";
+const WARNING_FILE_PATH: &str = "warning_string.txt";
+
 const CAMERA_SPEED: f32 = 1000.0;
 
 const COLORS: [Color; 3] = [Color::Srgba(BLUE), Color::Srgba(WHITE), Color::Srgba(RED)];
@@ -56,7 +59,7 @@ fn main() {
 }
 
 fn setup(mut commands: Commands, assets: Res<AssetServer>, color_tint: Res<ColorTint>) {
-    warn!(include_str!("warning_string.txt"));
+    warn!(include_str!(WARNING_FILE_PATH));
 
     let mut rng = rand::thread_rng();
 
@@ -66,7 +69,7 @@ fn setup(mut commands: Commands, assets: Res<AssetServer>, color_tint: Res<Color
     let half_x = (map_size.x / 2.0) as i32;
     let half_y = (map_size.y / 2.0) as i32;
 
-    let sprite_handle = assets.load("branding/icon.png");
+    let sprite_handle = assets.load(LOGO_PATH);
 
     // Spawns the camera
 

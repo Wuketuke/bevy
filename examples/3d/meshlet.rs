@@ -11,16 +11,21 @@ use bevy::{
         CascadeShadowConfigBuilder, DirectionalLightShadowMap,
     },
     prelude::*,
-    render::render_resource::AsBindGroup,
+    render::{extract_instances::ExtractInstancesPlugin, render_resource::AsBindGroup},
 };
 use camera_controller::{CameraController, CameraControllerPlugin};
-use std::{f32::consts::PI, path::Path, process::ExitCode};
+use std::{f32::consts::PI, f64::consts::E, path::Path, process::ExitCode};
 
 const ASSET_URL: &str = "https://raw.githubusercontent.com/JMS55/bevy_meshlet_asset/bd869887bc5c9c6e74e353f657d342bef84bacd8/bunny.meshlet_mesh";
+const ENVIROMENT_DIFFUSE_PATH: &str = "environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2";
+const ENVIROMENT_SPECULAR_PATH: &str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+const BUNNY_PATH: &str = "models/bunny.meshlet_mesh";
 
 fn main() -> ExitCode {
-    if !Path::new("./assets/models/bunny.meshlet_mesh").exists() {
-        eprintln!("ERROR: Asset at path <bevy>/assets/models/bunny.meshlet_mesh is missing. Please download it from {ASSET_URL}");
+    if !Path::new(format!("./assets/{BUNNY_PATH}").as_str()).exists() {
+        eprintln!(
+            "ERROR: Bunny model at assets/{BUNNY_PATH} is missing, please load from {ASSET_URL}"
+        );
         return ExitCode::FAILURE;
     }
 
@@ -52,8 +57,8 @@ fn setup(
             ..default()
         },
         EnvironmentMapLight {
-            diffuse_map: asset_server.load("environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2"),
-            specular_map: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            diffuse_map: asset_server.load(ENVIROMENT_DIFFUSE_PATH),
+            specular_map: asset_server.load(ENVIROMENT_SPECULAR_PATH),
             intensity: 150.0,
         },
         CameraController::default(),
@@ -84,7 +89,7 @@ fn setup(
     // that has been converted to a [`bevy_pbr::meshlet::MeshletMesh`]
     // using [`bevy_pbr::meshlet::MeshletMesh::from_mesh`], which is
     // a function only available when the `meshlet_processor` cargo feature is enabled.
-    let meshlet_mesh_handle = asset_server.load("models/bunny.meshlet_mesh");
+    let meshlet_mesh_handle = asset_server.load(BUNNY_PATH);
     let debug_material = debug_materials.add(MeshletDebugMaterial::default());
 
     for x in -2..=2 {

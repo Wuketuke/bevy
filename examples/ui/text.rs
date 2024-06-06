@@ -9,6 +9,9 @@ use bevy::{
     prelude::*,
 };
 
+const FONT_PATH: &str = "fonts/FiraSans-Bold.ttf";
+const FONT_ALT_PATH: &str = "fonts/FiraMono-Medium.ttf";
+
 fn main() {
     App::new()
         .add_plugins((DefaultPlugins, FrameTimeDiagnosticsPlugin))
@@ -36,7 +39,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             "hello\nbevy!",
             TextStyle {
                 // This font is loaded and will be used instead of the default font.
-                font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                font: asset_server.load(FONT_PATH),
                 font_size: 100.0,
                 ..default()
             },
@@ -60,7 +63,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                 "FPS: ",
                 TextStyle {
                     // This font is loaded and will be used instead of the default font.
-                    font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                    font: asset_server.load(FONT_PATH),
                     font_size: 60.0,
                     ..default()
                 },
@@ -75,7 +78,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             } else {
                 // "default_font" feature is unavailable, load a font to use instead.
                 TextStyle {
-                    font: asset_server.load("fonts/FiraMono-Medium.ttf"),
+                    font: asset_server.load(FONT_ALT_PATH),
                     font_size: 60.0,
                     color: GOLD.into(),
                 }
@@ -103,7 +106,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         TextBundle::from_section(
             "Default font disabled",
             TextStyle {
-                font: asset_server.load("fonts/FiraMono-Medium.ttf"),
+                font: asset_server.load(FONT_ALT_PATH),
                 ..default()
             },
         )

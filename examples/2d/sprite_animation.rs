@@ -7,6 +7,8 @@ use std::time::Duration;
 use bevy::input::common_conditions::input_just_pressed;
 use bevy::prelude::*;
 
+const ANIMATION_PATH: &str = "textures/rpg/chars/gabe/gabe-idle-run.png";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest())) // prevents blurry sprites
@@ -94,7 +96,7 @@ fn setup(
     commands.spawn(Camera2dBundle::default());
 
     // load the sprite sheet using the `AssetServer`
-    let texture = asset_server.load("textures/rpg/chars/gabe/gabe-idle-run.png");
+    let texture = asset_server.load(ANIMATION_PATH);
 
     // the sprite sheet has 7 sprites arranged in a row, and they are all 24px x 24px
     let layout = TextureAtlasLayout::from_grid(UVec2::splat(24), 7, 1, None, None);

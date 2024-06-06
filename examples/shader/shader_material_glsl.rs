@@ -12,6 +12,10 @@ use bevy::{
     },
 };
 
+const LOGO_PATH: &str = "branding/icon.png";
+const VERTEX_SHADER_PATH: &str = "shaders/custom_material.vert";
+const FRAGMENT_SHADER_PATH: &str = "shaders/custom_material.frag";
+
 fn main() {
     App::new()
         .add_plugins((DefaultPlugins, MaterialPlugin::<CustomMaterial>::default()))
@@ -32,7 +36,7 @@ fn setup(
         transform: Transform::from_xyz(0.0, 0.5, 0.0),
         material: materials.add(CustomMaterial {
             color: LinearRgba::BLUE,
-            color_texture: Some(asset_server.load("branding/icon.png")),
+            color_texture: Some(asset_server.load(LOGO_PATH)),
             alpha_mode: AlphaMode::Blend,
         }),
         ..default()
@@ -61,11 +65,11 @@ struct CustomMaterial {
 /// When using the GLSL shading language for your shader, the specialize method must be overridden.
 impl Material for CustomMaterial {
     fn vertex_shader() -> ShaderRef {
-        "shaders/custom_material.vert".into()
+        VERTEX_SHADER_PATH.into()
     }
 
     fn fragment_shader() -> ShaderRef {
-        "shaders/custom_material.frag".into()
+        FRAGMENT_SHADER_PATH.into()
     }
 
     fn alpha_mode(&self) -> AlphaMode {

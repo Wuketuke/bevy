@@ -6,6 +6,8 @@ use bevy::text::BreakLineOn;
 use bevy::window::WindowResolution;
 use bevy::winit::WinitSettings;
 
+const FONT_PATH: &str = "fonts/FiraSans-Bold.ttf";
+
 #[derive(FromArgs, Resource)]
 /// `text_wrap_debug` demonstrates text wrapping and use of the `LineBreakOn` property
 struct Args {
@@ -49,7 +51,7 @@ fn spawn(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2dBundle::default());
 
     let text_style = TextStyle {
-        font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+        font: asset_server.load(FONT_PATH),
         font_size: 14.0,
         ..default()
     };

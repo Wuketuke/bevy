@@ -5,6 +5,7 @@ use bevy::{
     prelude::*,
     sprite::{MaterialMesh2dBundle, Mesh2dHandle},
 };
+const BANNER_PATH: &str = "branding/banner.png";
 
 fn main() {
     App::new()
@@ -20,7 +21,7 @@ fn setup(
     asset_server: Res<AssetServer>,
 ) {
     // Load the Bevy logo as a texture
-    let texture_handle = asset_server.load("branding/banner.png");
+    let texture_handle = asset_server.load(BANNER_PATH);
     // Build a default quad mesh
     let mut mesh = Mesh::from(Rectangle::default());
     // Build vertex colors for the quad. One entry per vertex (the corners of the quad)

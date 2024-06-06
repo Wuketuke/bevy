@@ -17,6 +17,9 @@ use bevy::{
 };
 use std::{num::NonZeroU32, process::exit};
 
+const SHADER_PATH: &str = "shaders/texture_binding_array.wgsl";
+// this example also loads the textures/rpg/tiles/generic-rpg-tileXX.png testures (where XX is a number from 01 to 71)
+
 fn main() {
     let mut app = App::new();
     app.add_plugins((
@@ -186,6 +189,6 @@ impl AsBindGroup for BindlessMaterial {
 
 impl Material for BindlessMaterial {
     fn fragment_shader() -> ShaderRef {
-        "shaders/texture_binding_array.wgsl".into()
+        SHADER_PATH.into()
     }
 }

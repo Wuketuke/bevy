@@ -12,6 +12,8 @@ use bevy::{
     prelude::*,
 };
 
+const MODEL_PATH: &str = "models/terrain/Mountains.gltf";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -72,8 +74,7 @@ fn setup_terrain_scene(
 
     // Terrain
     commands.spawn(SceneBundle {
-        scene: asset_server
-            .load(GltfAssetLabel::Scene(0).from_asset("models/terrain/Mountains.gltf")),
+        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(MODEL_PATH)),
         ..default()
     });
 

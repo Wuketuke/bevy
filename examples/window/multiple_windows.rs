@@ -2,6 +2,8 @@
 
 use bevy::{prelude::*, render::camera::RenderTarget, window::WindowRef};
 
+const MODEL_PATH: &str = "models/torus/torus.gltf";
+
 fn main() {
     App::new()
         // By default, a primary window gets spawned by `WindowPlugin`, contained in `DefaultPlugins`
@@ -13,7 +15,7 @@ fn main() {
 fn setup_scene(mut commands: Commands, asset_server: Res<AssetServer>) {
     // add entities to the world
     commands.spawn(SceneBundle {
-        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/torus/torus.gltf")),
+        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(MODEL_PATH)),
         ..default()
     });
     // light

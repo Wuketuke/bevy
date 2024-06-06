@@ -6,6 +6,8 @@ use bevy::{
     pbr::CascadeShadowConfigBuilder, prelude::*, render::camera::Viewport, window::WindowResized,
 };
 
+const MODEL_PATH: &str = "models/animated/Fox.glb";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -29,7 +31,7 @@ fn setup(
     });
 
     commands.spawn(SceneBundle {
-        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/animated/Fox.glb")),
+        scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(MODEL_PATH)),
         ..default()
     });
 

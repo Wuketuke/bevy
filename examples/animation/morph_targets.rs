@@ -10,6 +10,8 @@
 use bevy::prelude::*;
 use std::f32::consts::PI;
 
+const MODEL_PATH: &str = "models/animated/MorphStressTest.gltf";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
@@ -36,19 +38,18 @@ struct MorphData {
 
 fn setup(asset_server: Res<AssetServer>, mut commands: Commands) {
     commands.insert_resource(MorphData {
-        the_wave: asset_server
-            .load(GltfAssetLabel::Animation(2).from_asset("models/animated/MorphStressTest.gltf")),
+        the_wave: asset_server.load(GltfAssetLabel::Animation(2).from_asset(MODEL_PATH)),
         mesh: asset_server.load(
             GltfAssetLabel::Primitive {
                 mesh: 0,
                 primitive: 0,
             }
-            .from_asset("models/animated/MorphStressTest.gltf"),
+            .from_asset(MODEL_PATH),
         ),
     });
     commands.spawn(SceneBundle {
         scene: asset_server
-            .load(GltfAssetLabel::Scene(0).from_asset("models/animated/MorphStressTest.gltf")),
+            .load(GltfAssetLabel::Scene(0).from_asset(MODEL_PATH)),
         ..default()
     });
     commands.spawn(DirectionalLightBundle {

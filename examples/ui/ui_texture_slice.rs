@@ -7,6 +7,9 @@ use bevy::{
     winit::WinitSettings,
 };
 
+const BORDER_PATH: &str = "textures/fantasy_ui_borders/panel-border-010.png";
+const FONT_PATH: &str = "fonts/FiraSans-Bold.ttf";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -44,7 +47,7 @@ fn button_system(
 }
 
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let image = asset_server.load("textures/fantasy_ui_borders/panel-border-010.png");
+    let image = asset_server.load(BORDER_PATH);
 
     let slicer = TextureSlicer {
         border: BorderRect::square(22.0),
@@ -89,7 +92,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                         parent.spawn(TextBundle::from_section(
                             "Button",
                             TextStyle {
-                                font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+                                font: asset_server.load(FONT_PATH),
                                 font_size: 40.0,
                                 color: Color::srgb(0.9, 0.9, 0.9),
                             },

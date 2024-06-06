@@ -7,6 +7,8 @@ use bevy::{
     window::{AppLifecycle, WindowMode},
 };
 
+const MUSIC_PATH: &str = "sounds/Windless Slopes.ogg";
+
 // the `bevy_main` proc_macro generates the required boilerplate for iOS and Android
 #[bevy_main]
 fn main() {
@@ -168,7 +170,7 @@ fn button_handler(
 
 fn setup_music(asset_server: Res<AssetServer>, mut commands: Commands) {
     commands.spawn(AudioBundle {
-        source: asset_server.load("sounds/Windless Slopes.ogg"),
+        source: asset_server.load(MUSIC_PATH),
         settings: PlaybackSettings::LOOP,
     });
 }

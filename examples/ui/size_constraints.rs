@@ -2,6 +2,8 @@
 
 use bevy::{color::palettes::css::*, prelude::*};
 
+const FONT_PATH: &str = "fonts/FiraSans-Bold.ttf";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -43,7 +45,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2dBundle::default());
 
     let text_style = TextStyle {
-        font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+        font: asset_server.load(FONT_PATH),
         font_size: 40.0,
         color: Color::srgb(0.9, 0.9, 0.9),
     };

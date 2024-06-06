@@ -11,6 +11,8 @@ use bevy::{
 /// audio.
 const AUDIO_SCALE: f32 = 1. / 100.0;
 
+const MUSIC_PATH: &str = "sounds/Windless Slopes.ogg";
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(AudioPlugin {
@@ -42,7 +44,7 @@ fn setup(
         },
         Emitter::default(),
         AudioBundle {
-            source: asset_server.load("sounds/Windless Slopes.ogg"),
+            source: asset_server.load(MUSIC_PATH),
             settings: PlaybackSettings::LOOP.with_spatial(true),
         },
     ));

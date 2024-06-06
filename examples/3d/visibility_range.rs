@@ -10,6 +10,11 @@ use bevy::{
     render::view::VisibilityRange,
 };
 
+const MODEL_NEAR_PATH: &str = "models/FlightHelmet/FlightHelmet.gltf";
+const MODEL_FAR_PATH: &str = "models/FlightHelmetLowPoly/FlightHelmetLowPoly.gltf";
+const ENVIROMENT_DIFFUSE_PATH: &str = "environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2";
+const ENVIROMENT_SPECULAR_PATH: &str = "environment_maps/pisa_specular_rgb9e5_zstd.ktx2";
+
 // Where the camera is focused.
 const CAMERA_FOCAL_POINT: Vec3 = vec3(0.0, 0.3, 0.0);
 // Speed in units per frame.
@@ -104,18 +109,14 @@ fn setup(
 
     commands
         .spawn(SceneBundle {
-            scene: asset_server
-                .load(GltfAssetLabel::Scene(0).from_asset("models/FlightHelmet/FlightHelmet.gltf")),
+            scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(MODEL_NEAR_PATH)),
             ..default()
         })
         .insert(MainModel::HighPoly);
 
     commands
         .spawn(SceneBundle {
-            scene: asset_server.load(
-                GltfAssetLabel::Scene(0)
-                    .from_asset("models/FlightHelmetLowPoly/FlightHelmetLowPoly.gltf"),
-            ),
+            scene: asset_server.load(GltfAssetLabel::Scene(0).from_asset(MODEL_FAR_PATH)),
             ..default()
         })
         .insert(MainModel::LowPoly);
@@ -149,8 +150,8 @@ fn setup(
             ..default()
         })
         .insert(EnvironmentMapLight {
-            diffuse_map: asset_server.load("environment_maps/pisa_diffuse_rgb9e5_zstd.ktx2"),
-            specular_map: asset_server.load("environment_maps/pisa_specular_rgb9e5_zstd.ktx2"),
+            diffuse_map: asset_server.load(ENVIROMENT_DIFFUSE_PATH),
+            specular_map: asset_server.load(ENVIROMENT_SPECULAR_PATH),
             intensity: 150.0,
         });
 

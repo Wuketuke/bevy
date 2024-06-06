@@ -13,6 +13,8 @@ use bevy::{
     },
 };
 
+const SHADER_PATH: &str = "shaders/custom_vertex_attribute.wgsl";
+
 fn main() {
     App::new()
         .add_plugins((DefaultPlugins, MaterialPlugin::<CustomMaterial>::default()))
@@ -65,10 +67,10 @@ struct CustomMaterial {
 
 impl Material for CustomMaterial {
     fn vertex_shader() -> ShaderRef {
-        "shaders/custom_vertex_attribute.wgsl".into()
+        SHADER_PATH.into()
     }
     fn fragment_shader() -> ShaderRef {
-        "shaders/custom_vertex_attribute.wgsl".into()
+        SHADER_PATH.into()
     }
 
     fn specialize(
