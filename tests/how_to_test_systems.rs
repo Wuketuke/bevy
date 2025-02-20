@@ -27,7 +27,7 @@ fn despawn_dead_enemies(
     for (entity, enemy) in &enemies {
         if enemy.hit_points == 0 {
             commands.entity(entity).despawn();
-            dead_enemies.send(EnemyDied(enemy.score_value));
+            dead_enemies.write(EnemyDied(enemy.score_value));
         }
     }
 }
@@ -164,7 +164,7 @@ fn update_score_on_event() {
     // Send an `EnemyDied` event
     app.world_mut()
         .resource_mut::<Events<EnemyDied>>()
-        .send(EnemyDied(3));
+        .write(EnemyDied(3));
 
     // Run systems
     app.update();

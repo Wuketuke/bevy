@@ -121,11 +121,20 @@ impl<E: Event> Events<E> {
     /// [`EventReader`](super::EventReader)s can then read the event.
     /// This method returns the [ID](`EventId`) of the sent `event`.
     #[track_caller]
+    #[deprecated(since = "0.17.0", note = "function renamed to `write`")]
     pub fn send(&mut self, event: E) -> EventId<E> {
-        self.send_with_caller(event, MaybeLocation::caller())
+        self.write_with_caller(event, MaybeLocation::caller())
     }
 
-    pub(crate) fn send_with_caller(&mut self, event: E, caller: MaybeLocation) -> EventId<E> {
+    /// "Sends" an `event` by writing it to the current event buffer.
+    /// [`EventReader`](super::EventReader)s can then read the event.
+    /// This method returns the [ID](`EventId`) of the written `event`.
+    #[track_caller]
+    pub fn write(&mut self, event: E) -> EventId<E> {
+        self.write_with_caller(event, MaybeLocation::caller())
+    }
+
+    pub(crate) fn write_with_caller(&mut self, event: E, caller: MaybeLocation) -> EventId<E> {
         let event_id = EventId {
             id: self.event_count,
             caller,
@@ -146,12 +155,29 @@ impl<E: Event> Events<E> {
     /// This is more efficient than sending each event individually.
     /// This method returns the [IDs](`EventId`) of the sent `events`.
     #[track_caller]
-    pub fn send_batch(&mut self, events: impl IntoIterator<Item = E>) -> SendBatchIds<E> {
+    #[deprecated(since = "0.17.0", note = "function renamed to `write_batch`")]
+    pub fn send_batch(&mut self, events: impl IntoIterator<Item = E>) -> WrittenBatchIds<E> {
         let last_count = self.event_count;
 
         self.extend(events);
 
-        SendBatchIds {
+        WrittenBatchIds {
+            last_count,
+            event_count: self.event_count,
+            _marker: PhantomData,
+        }
+    }
+
+    /// Writes a list of `events` all at once, which can later be read by [`EventReader`](super::EventReader)s.
+    /// This is more efficient than writing each event individually.
+    /// This method returns the [IDs](`EventId`) of the written `events`.
+    #[track_caller]
+    pub fn write_batch(&mut self, events: impl IntoIterator<Item = E>) -> WrittenBatchIds<E> {
+        let last_count = self.event_count;
+
+        self.extend(events);
+
+        WrittenBatchIds {
             last_count,
             event_count: self.event_count,
             _marker: PhantomData,
@@ -161,11 +187,22 @@ impl<E: Event> Events<E> {
     /// Sends the default value of the event. Useful when the event is an empty struct.
     /// This method returns the [ID](`EventId`) of the sent `event`.
     #[track_caller]
+    #[deprecated(since = "0.17.0", note = "function renamed to `write_default`")]
     pub fn send_default(&mut self) -> EventId<E>
     where
         E: Default,
     {
-        self.send(Default::default())
+        self.write(Default::default())
+    }
+
+    /// Sends the default value of the event. Useful when the event is an empty struct.
+    /// This method returns the [ID](`EventId`) of the sent `event`.
+    #[track_caller]
+    pub fn write_default(&mut self) -> EventId<E>
+    where
+        E: Default,
+    {
+        self.write(Default::default())
     }
 
     /// Gets a new [`EventCursor`]. This will include all events already in the event buffers.
@@ -351,13 +388,17 @@ impl<E: Event> DerefMut for EventSequence<E> {
 }
 
 /// [`Iterator`] over sent [`EventIds`](`EventId`) from a batch.
-pub struct SendBatchIds<E> {
+#[deprecated(since = "0.17.0", note = "struct renamed to `WrittenBatchIds`")]
+pub type SendBatchIds<E> = WrittenBatchIds<E>;
+
+/// [`Iterator`] over written [`EventIds`](`EventId`) from a batch.
+pub struct WrittenBatchIds<E> {
     last_count: usize,
     event_count: usize,
     _marker: PhantomData<E>,
 }
 
-impl<E: Event> Iterator for SendBatchIds<E> {
+impl<E: Event> Iterator for WrittenBatchIds<E> {
     type Item = EventId<E>;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -377,7 +418,7 @@ impl<E: Event> Iterator for SendBatchIds<E> {
     }
 }
 
-impl<E: Event> ExactSizeIterator for SendBatchIds<E> {
+impl<E: Event> ExactSizeIterator for WrittenBatchIds<E> {
     fn len(&self) -> usize {
         self.event_count.saturating_sub(self.last_count)
     }
@@ -401,15 +442,15 @@ mod tests {
         test_events.update();
 
         // Sending one event
-        test_events.send(TestEvent);
+        test_events.write(TestEvent);
 
         assert_eq!(test_events.len(), 1);
         assert_eq!(test_events.iter_current_update_events().count(), 1);
         test_events.update();
 
         // Sending two events on the next frame
-        test_events.send(TestEvent);
-        test_events.send(TestEvent);
+        test_events.write(TestEvent);
+        test_events.write(TestEvent);
 
         assert_eq!(test_events.len(), 3); // Events are double-buffered, so we see 1 + 2 = 3
         assert_eq!(test_events.iter_current_update_events().count(), 2);

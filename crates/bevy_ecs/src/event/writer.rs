@@ -1,5 +1,5 @@
 use bevy_ecs::{
-    event::{Event, EventId, Events, SendBatchIds},
+    event::{Event, EventId, Events, WrittenBatchIds},
     system::{ResMut, SystemParam},
 };
 
@@ -69,8 +69,18 @@ impl<'w, E: Event> EventWriter<'w, E> {
     ///
     /// See [`Events`] for details.
     #[track_caller]
+    #[deprecated(since = "0.17.0", note = "function renamed to `write`")]
     pub fn send(&mut self, event: E) -> EventId<E> {
-        self.events.send(event)
+        self.events.write(event)
+    }
+
+    /// Writes an `event`, which can later be read by [`EventReader`](super::EventReader)s.
+    /// This method returns the [ID](`EventId`) of the written `event`.
+    ///
+    /// See [`Events`] for details.
+    #[track_caller]
+    pub fn write(&mut self, event: E) -> EventId<E> {
+        self.events.write(event)
     }
 
     /// Sends a list of `events` all at once, which can later be read by [`EventReader`](super::EventReader)s.
@@ -79,8 +89,20 @@ impl<'w, E: Event> EventWriter<'w, E> {
     ///
     /// See [`Events`] for details.
     #[track_caller]
-    pub fn send_batch(&mut self, events: impl IntoIterator<Item = E>) -> SendBatchIds<E> {
-        self.events.send_batch(events)
+    #[deprecated(since = "0.17.0", note = "function renamed to `write_batch`")]
+    pub fn send_batch(&mut self, events: impl IntoIterator<Item = E>) -> WrittenBatchIds<E> {
+        self.events.write_batch(events)
+    }
+
+    
+    /// Writes a list of `events` all at once, which can later be read by [`EventReader`](super::EventReader)s.
+    /// This is more efficient than writing each event individually.
+    /// This method returns the [IDs](`EventId`) of the written `events`.
+    ///
+    /// See [`Events`] for details.
+    #[track_caller]
+    pub fn write_batch(&mut self, events: impl IntoIterator<Item = E>) -> WrittenBatchIds<E> {
+        self.events.write_batch(events)
     }
 
     /// Sends the default value of the event. Useful when the event is an empty struct.
@@ -88,10 +110,24 @@ impl<'w, E: Event> EventWriter<'w, E> {
     ///
     /// See [`Events`] for details.
     #[track_caller]
+    #[deprecated(since = "0.17.0", note = "function renamed to `write_default`")]
     pub fn send_default(&mut self) -> EventId<E>
     where
         E: Default,
     {
-        self.events.send_default()
+        self.events.write_default()
+    }
+
+    
+    /// Writes the default value of the event. Useful when the event is an empty struct.
+    /// This method returns the [ID](`EventId`) of the written `event`.
+    ///
+    /// See [`Events`] for details.
+    #[track_caller]
+    pub fn write_default(&mut self) -> EventId<E>
+    where
+        E: Default,
+    {
+        self.events.write_default()
     }
 }

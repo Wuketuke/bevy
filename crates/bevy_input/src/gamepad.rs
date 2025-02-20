@@ -1539,7 +1539,7 @@ pub fn gamepad_event_processing_system(
         match event {
             // Connections require inserting/removing components so they are done in a separate system
             RawGamepadEvent::Connection(send_event) => {
-                processed_events.send(GamepadEvent::from(send_event.clone()));
+                processed_events.write(GamepadEvent::from(send_event.clone()));
             }
             RawGamepadEvent::Axis(RawGamepadAxisChangedEvent {
                 gamepad,
@@ -1559,8 +1559,8 @@ pub fn gamepad_event_processing_system(
                 gamepad_axis.analog.set(axis, filtered_value.raw);
                 let send_event =
                     GamepadAxisChangedEvent::new(gamepad, axis, filtered_value.scaled.to_f32());
-                processed_axis_events.send(send_event);
-                processed_events.send(GamepadEvent::from(send_event));
+                processed_axis_events.write(send_event);
+                processed_events.write(GamepadEvent::from(send_event));
             }
             RawGamepadEvent::Button(RawGamepadButtonChangedEvent {
                 gamepad,
@@ -1583,7 +1583,7 @@ pub fn gamepad_event_processing_system(
                 if button_settings.is_released(filtered_value.raw) {
                     // Check if button was previously pressed
                     if gamepad_buttons.pressed(button) {
-                        processed_digital_events.send(GamepadButtonStateChangedEvent::new(
+                        processed_digital_events.write(GamepadButtonStateChangedEvent::new(
                             gamepad,
                             button,
                             ButtonState::Released,
@@ -1595,7 +1595,7 @@ pub fn gamepad_event_processing_system(
                 } else if button_settings.is_pressed(filtered_value.raw) {
                     // Check if button was previously not pressed
                     if !gamepad_buttons.pressed(button) {
-                        processed_digital_events.send(GamepadButtonStateChangedEvent::new(
+                        processed_digital_events.write(GamepadButtonStateChangedEvent::new(
                             gamepad,
                             button,
                             ButtonState::Pressed,
@@ -1615,8 +1615,8 @@ pub fn gamepad_event_processing_system(
                     button_state,
                     filtered_value.scaled.to_f32(),
                 );
-                processed_analog_events.send(send_event);
-                processed_events.send(GamepadEvent::from(send_event));
+                processed_analog_events.write(send_event);
+                processed_events.write(GamepadEvent::from(send_event));
             }
         }
     }
@@ -2160,7 +2160,7 @@ mod tests {
             self.app
                 .world_mut()
                 .resource_mut::<Events<GamepadConnectionEvent>>()
-                .send(GamepadConnectionEvent::new(
+                .write(GamepadConnectionEvent::new(
                     gamepad,
                     Connected {
                         name: "Test gamepad".to_string(),
@@ -2175,14 +2175,14 @@ mod tests {
             self.app
                 .world_mut()
                 .resource_mut::<Events<GamepadConnectionEvent>>()
-                .send(GamepadConnectionEvent::new(gamepad, Disconnected));
+                .write(GamepadConnectionEvent::new(gamepad, Disconnected));
         }
 
         pub fn send_raw_gamepad_event(&mut self, event: RawGamepadEvent) {
             self.app
                 .world_mut()
                 .resource_mut::<Events<RawGamepadEvent>>()
-                .send(event);
+                .write(event);
         }
 
         pub fn send_raw_gamepad_event_batch(
@@ -2192,7 +2192,7 @@ mod tests {
             self.app
                 .world_mut()
                 .resource_mut::<Events<RawGamepadEvent>>()
-                .send_batch(events);
+                .write_batch(events);
         }
     }
 
@@ -2386,7 +2386,7 @@ mod tests {
         ctx.app
             .world_mut()
             .resource_mut::<Events<RawGamepadEvent>>()
-            .send_batch([
+            .write_batch([
                 RawGamepadEvent::Axis(RawGamepadAxisChangedEvent::new(
                     entity,
                     GamepadAxis::LeftStickY,
@@ -2450,7 +2450,7 @@ mod tests {
         ctx.app
             .world_mut()
             .resource_mut::<Events<RawGamepadEvent>>()
-            .send_batch(events);
+            .write_batch(events);
         ctx.update();
         assert_eq!(
             ctx.app
@@ -2487,7 +2487,7 @@ mod tests {
         ctx.app
             .world_mut()
             .resource_mut::<Events<RawGamepadEvent>>()
-            .send_batch(events);
+            .write_batch(events);
         ctx.update();
         assert_eq!(
             ctx.app
@@ -2535,7 +2535,7 @@ mod tests {
         ctx.app
             .world_mut()
             .resource_mut::<Events<RawGamepadEvent>>()
-            .send_batch(events);
+            .write_batch(events);
         ctx.update();
 
         let events = ctx
@@ -2591,7 +2591,7 @@ mod tests {
         ctx.app
             .world_mut()
             .resource_mut::<Events<RawGamepadEvent>>()
-            .send_batch(events);
+            .write_batch(events);
         ctx.update();
         assert_eq!(
             ctx.app
@@ -2629,7 +2629,7 @@ mod tests {
         ctx.app
             .world_mut()
             .resource_mut::<Events<RawGamepadEvent>>()
-            .send_batch(events);
+            .write_batch(events);
         ctx.update();
 
         let events = ctx
@@ -2665,7 +2665,7 @@ mod tests {
         ctx.app
             .world_mut()
             .resource_mut::<Events<RawGamepadEvent>>()
-            .send_batch(events);
+            .write_batch(events);
         ctx.update();
 
         assert_eq!(

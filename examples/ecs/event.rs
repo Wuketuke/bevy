@@ -44,7 +44,7 @@ fn deal_damage_over_time(
 ) {
     if state.tick(time.delta()).finished() {
         // Events can be sent with 'send' and constructed just like any other object.
-        events.send(DealDamage { amount: 10 });
+        events.write(DealDamage { amount: 10 });
     }
 }
 
@@ -62,7 +62,7 @@ fn apply_armor_to_damage(
         event.amount -= 1;
         if event.amount <= 0 {
             // Zero-sized events can also be sent with 'send'
-            armor_events.send(ArmorBlockedDamage);
+            armor_events.write(ArmorBlockedDamage);
         }
     }
 }
@@ -81,7 +81,7 @@ fn apply_damage_to_health(
         info!("Applying {} damage", event.amount);
         if event.amount > 0 {
             // Events with a 'Default' implementation can be sent with 'send_default'
-            rcvd_events.send_default();
+            rcvd_events.write_default();
         }
     }
 }
