@@ -2722,14 +2722,19 @@ impl<'w, 's> DefaultUiCamera<'w, 's> {
 ///     ));
 /// }
 /// ```
-#[derive(Component, Clone, Copy, Default, Debug, Reflect, Eq, PartialEq)]
+#[derive(Component, Clone, Copy, Debug, Reflect, PartialEq)]
 #[reflect(Component, Default, PartialEq, Clone)]
 pub enum UiAntiAlias {
     /// UI will render with anti-aliasing
-    #[default]
-    On,
+    On { radius: f32 },
     /// UI will render without anti-aliasing
     Off,
+}
+
+impl Default for UiAntiAlias {
+    fn default() -> Self {
+        Self::On { radius: 1. }
+    }
 }
 
 /// Number of shadow samples.

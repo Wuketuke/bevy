@@ -139,7 +139,7 @@ pub fn compute_gradient_line_length(angle: f32, size: Vec2) -> f32 {
 
 #[derive(Clone, Copy, Hash, PartialEq, Eq)]
 pub struct UiGradientPipelineKey {
-    anti_alias: bool,
+    anti_alias: u32,
     pub hdr: bool,
 }
 
@@ -180,7 +180,7 @@ impl SpecializedRenderPipeline for GradientPipeline {
                 VertexFormat::Float32,
             ],
         );
-        let shader_defs = if key.anti_alias {
+        let shader_defs = if key.anti_alias != 0 {
             vec!["ANTI_ALIAS".into()]
         } else {
             Vec::new()
@@ -596,11 +596,16 @@ pub fn queue_gradient(
             continue;
         };
 
+        let anti_alias = match ui_anti_alias {
+            Some(UiAntiAlias::On { radius }) => radius.to_bits(),
+            Some(UiAntiAlias::Off) => 0,
+            None => 1f32.to_bits(),
+        };
         let pipeline = pipelines.specialize(
             &pipeline_cache,
             &gradients_pipeline,
             UiGradientPipelineKey {
-                anti_alias: matches!(ui_anti_alias, None | Some(UiAntiAlias::On)),
+                anti_alias,
                 hdr: view.hdr,
             },
         );

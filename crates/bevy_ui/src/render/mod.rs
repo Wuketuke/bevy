@@ -1161,12 +1161,17 @@ pub fn queue_uinodes(
             continue;
         };
 
+        let anti_alias = match ui_anti_alias {
+            Some(UiAntiAlias::On { radius }) => radius.to_bits(),
+            Some(UiAntiAlias::Off) => 0,
+            None => 1f32.to_bits(),
+        };
         let pipeline = pipelines.specialize(
             &pipeline_cache,
             &ui_pipeline,
             UiPipelineKey {
                 hdr: view.hdr,
-                anti_alias: matches!(ui_anti_alias, None | Some(UiAntiAlias::On)),
+                anti_alias,
             },
         );
 
