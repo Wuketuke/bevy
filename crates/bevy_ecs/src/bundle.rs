@@ -53,7 +53,7 @@
 ///     related_spawner: SpawnRelatedBundle<ChildOf, Spawn<Marker>>,
 /// }
 /// ```
-pub use bevy_ecs_macros::Bundle;
+pub use bevy_ecs_macros::{Bundle, BundleFromComponent};
 
 use crate::{
     archetype::{
